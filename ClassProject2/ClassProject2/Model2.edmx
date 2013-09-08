@@ -1,0 +1,558 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ClassProjectModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ClassProjectModelStoreContainer">
+    <EntitySet Name="Activities" EntityType="ClassProjectModel.Store.Activities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ClassFiles" EntityType="ClassProjectModel.Store.ClassFiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Grades" EntityType="ClassProjectModel.Store.Grades" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Labs" EntityType="ClassProjectModel.Store.Labs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="People" EntityType="ClassProjectModel.Store.People" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Pictures" EntityType="ClassProjectModel.Store.Pictures" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Schedules" EntityType="ClassProjectModel.Store.Schedules" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StudyGroups" EntityType="ClassProjectModel.Store.StudyGroups" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ActivityGrades" Association="ClassProjectModel.Store.FK_ActivityGrades">
+      <End Role="Activities" EntitySet="Activities" />
+      <End Role="Grades" EntitySet="Grades" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClassFilesActivity" Association="ClassProjectModel.Store.FK_ClassFilesActivity">
+      <End Role="Activities" EntitySet="Activities" />
+      <End Role="ClassFiles" EntitySet="ClassFiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScheduleActivity" Association="ClassProjectModel.Store.FK_ScheduleActivity">
+      <End Role="Schedules" EntitySet="Schedules" />
+      <End Role="Activities" EntitySet="Activities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GradesPerson" Association="ClassProjectModel.Store.FK_GradesPerson">
+      <End Role="People" EntitySet="People" />
+      <End Role="Grades" EntitySet="Grades" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabPerson" Association="ClassProjectModel.Store.FK_LabPerson">
+      <End Role="Labs" EntitySet="Labs" />
+      <End Role="People" EntitySet="People" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScheduleLab" Association="ClassProjectModel.Store.FK_ScheduleLab">
+      <End Role="Schedules" EntitySet="Schedules" />
+      <End Role="Labs" EntitySet="Labs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PicturePerson" Association="ClassProjectModel.Store.FK_PicturePerson">
+      <End Role="People" EntitySet="People" />
+      <End Role="Pictures" EntitySet="Pictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudyGroupSchedule" Association="ClassProjectModel.Store.FK_StudyGroupSchedule">
+      <End Role="Schedules" EntitySet="Schedules" />
+      <End Role="StudyGroups" EntitySet="StudyGroups" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Activities">
+    <Key>
+      <PropertyRef Name="ActID" />
+    </Key>
+    <Property Name="ActID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Property1" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScheduleShedID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClassFiles">
+    <Key>
+      <PropertyRef Name="FileID" />
+    </Key>
+    <Property Name="FileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="File" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Activity_ActID" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Grades">
+    <Key>
+      <PropertyRef Name="GradeID" />
+    </Key>
+    <Property Name="GradeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
+    <Property Name="PersonPersonId" Type="int" Nullable="false" />
+    <Property Name="ActivityActID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Labs">
+    <Key>
+      <PropertyRef Name="LabID" />
+    </Key>
+    <Property Name="LabID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" DefaultValue="1" />
+    <Property Name="StudName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="InstrName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ScheduleShedID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="People">
+    <Key>
+      <PropertyRef Name="PersonId" />
+    </Key>
+    <Property Name="PersonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fname" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Lname" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ClassID" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LabLabID" Type="int" Nullable="false" />
+    <Property Name="PicturePictureID" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pictures">
+    <Key>
+      <PropertyRef Name="PicureID" />
+    </Key>
+    <Property Name="PicureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PictureFile" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Person_PersonId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Schedules">
+    <Key>
+      <PropertyRef Name="ShedID" />
+    </Key>
+    <Property Name="ShedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Day" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Time" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="StudyGroups">
+    <Key>
+      <PropertyRef Name="StuGrID" />
+    </Key>
+    <Property Name="StuGrID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScheduleShedID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ActivityGrades">
+    <End Role="Activities" Type="ClassProjectModel.Store.Activities" Multiplicity="1" />
+    <End Role="Grades" Type="ClassProjectModel.Store.Grades" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activities">
+        <PropertyRef Name="ActID" />
+      </Principal>
+      <Dependent Role="Grades">
+        <PropertyRef Name="ActivityActID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClassFilesActivity">
+    <End Role="Activities" Type="ClassProjectModel.Store.Activities" Multiplicity="0..1" />
+    <End Role="ClassFiles" Type="ClassProjectModel.Store.ClassFiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activities">
+        <PropertyRef Name="ActID" />
+      </Principal>
+      <Dependent Role="ClassFiles">
+        <PropertyRef Name="Activity_ActID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScheduleActivity">
+    <End Role="Schedules" Type="ClassProjectModel.Store.Schedules" Multiplicity="1" />
+    <End Role="Activities" Type="ClassProjectModel.Store.Activities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schedules">
+        <PropertyRef Name="ShedID" />
+      </Principal>
+      <Dependent Role="Activities">
+        <PropertyRef Name="ScheduleShedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GradesPerson">
+    <End Role="People" Type="ClassProjectModel.Store.People" Multiplicity="1" />
+    <End Role="Grades" Type="ClassProjectModel.Store.Grades" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="People">
+        <PropertyRef Name="PersonId" />
+      </Principal>
+      <Dependent Role="Grades">
+        <PropertyRef Name="PersonPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabPerson">
+    <End Role="Labs" Type="ClassProjectModel.Store.Labs" Multiplicity="1" />
+    <End Role="People" Type="ClassProjectModel.Store.People" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Labs">
+        <PropertyRef Name="LabID" />
+      </Principal>
+      <Dependent Role="People">
+        <PropertyRef Name="LabLabID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScheduleLab">
+    <End Role="Schedules" Type="ClassProjectModel.Store.Schedules" Multiplicity="1" />
+    <End Role="Labs" Type="ClassProjectModel.Store.Labs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schedules">
+        <PropertyRef Name="ShedID" />
+      </Principal>
+      <Dependent Role="Labs">
+        <PropertyRef Name="ScheduleShedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PicturePerson">
+    <End Role="People" Type="ClassProjectModel.Store.People" Multiplicity="0..1" />
+    <End Role="Pictures" Type="ClassProjectModel.Store.Pictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="People">
+        <PropertyRef Name="PersonId" />
+      </Principal>
+      <Dependent Role="Pictures">
+        <PropertyRef Name="Person_PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudyGroupSchedule">
+    <End Role="Schedules" Type="ClassProjectModel.Store.Schedules" Multiplicity="1" />
+    <End Role="StudyGroups" Type="ClassProjectModel.Store.StudyGroups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schedules">
+        <PropertyRef Name="ShedID" />
+      </Principal>
+      <Dependent Role="StudyGroups">
+        <PropertyRef Name="ScheduleShedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClassProjectModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ClassProjectEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Activities" EntityType="ClassProjectModel.Activity" />
+          <EntitySet Name="ClassFiles" EntityType="ClassProjectModel.ClassFile" />
+          <EntitySet Name="Grades" EntityType="ClassProjectModel.Grade" />
+          <EntitySet Name="Labs" EntityType="ClassProjectModel.Lab" />
+          <EntitySet Name="People" EntityType="ClassProjectModel.Person" />
+          <EntitySet Name="Pictures" EntityType="ClassProjectModel.Picture" />
+          <EntitySet Name="Schedules" EntityType="ClassProjectModel.Schedule" />
+          <EntitySet Name="StudyGroups" EntityType="ClassProjectModel.StudyGroup" />
+          <AssociationSet Name="FK_ActivityGrades" Association="ClassProjectModel.FK_ActivityGrades">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Grades" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassFilesActivity" Association="ClassProjectModel.FK_ClassFilesActivity">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="ClassFiles" EntitySet="ClassFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScheduleActivity" Association="ClassProjectModel.FK_ScheduleActivity">
+            <End Role="Schedules" EntitySet="Schedules" />
+            <End Role="Activities" EntitySet="Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GradesPerson" Association="ClassProjectModel.FK_GradesPerson">
+            <End Role="People" EntitySet="People" />
+            <End Role="Grades" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabPerson" Association="ClassProjectModel.FK_LabPerson">
+            <End Role="Labs" EntitySet="Labs" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScheduleLab" Association="ClassProjectModel.FK_ScheduleLab">
+            <End Role="Schedules" EntitySet="Schedules" />
+            <End Role="Labs" EntitySet="Labs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PicturePerson" Association="ClassProjectModel.FK_PicturePerson">
+            <End Role="People" EntitySet="People" />
+            <End Role="Pictures" EntitySet="Pictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudyGroupSchedule" Association="ClassProjectModel.FK_StudyGroupSchedule">
+            <End Role="Schedules" EntitySet="Schedules" />
+            <End Role="StudyGroups" EntitySet="StudyGroups" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="ActID" />
+          </Key>
+          <Property Name="ActID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Property1" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ScheduleShedID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Grades" Relationship="ClassProjectModel.FK_ActivityGrades" FromRole="Activities" ToRole="Grades" />
+          <NavigationProperty Name="ClassFiles" Relationship="ClassProjectModel.FK_ClassFilesActivity" FromRole="Activities" ToRole="ClassFiles" />
+          <NavigationProperty Name="Schedule" Relationship="ClassProjectModel.FK_ScheduleActivity" FromRole="Activities" ToRole="Schedules" />
+        </EntityType>
+        <EntityType Name="ClassFile">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="File" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Activity_ActID" Type="Int32" />
+          <NavigationProperty Name="Activity" Relationship="ClassProjectModel.FK_ClassFilesActivity" FromRole="ClassFiles" ToRole="Activities" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="GradeID" />
+          </Key>
+          <Property Name="GradeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="PersonPersonId" Type="Int32" Nullable="false" />
+          <Property Name="ActivityActID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Activity" Relationship="ClassProjectModel.FK_ActivityGrades" FromRole="Grades" ToRole="Activities" />
+          <NavigationProperty Name="Person" Relationship="ClassProjectModel.FK_GradesPerson" FromRole="Grades" ToRole="People" />
+        </EntityType>
+        <EntityType Name="Lab">
+          <Key>
+            <PropertyRef Name="LabID" />
+          </Key>
+          <Property Name="LabID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" DefaultValue="1" />
+          <Property Name="StudName" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="InstrName" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ScheduleShedID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="People" Relationship="ClassProjectModel.FK_LabPerson" FromRole="Labs" ToRole="People" />
+          <NavigationProperty Name="Schedule" Relationship="ClassProjectModel.FK_ScheduleLab" FromRole="Labs" ToRole="Schedules" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Fname" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Lname" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Username" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ClassID" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LabLabID" Type="Int32" Nullable="false" />
+          <Property Name="PicturePictureID" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Grades" Relationship="ClassProjectModel.FK_GradesPerson" FromRole="People" ToRole="Grades" />
+          <NavigationProperty Name="Lab" Relationship="ClassProjectModel.FK_LabPerson" FromRole="People" ToRole="Labs" />
+          <NavigationProperty Name="Pictures" Relationship="ClassProjectModel.FK_PicturePerson" FromRole="People" ToRole="Pictures" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="PicureID" />
+          </Key>
+          <Property Name="PicureID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PictureFile" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Person_PersonId" Type="Int32" />
+          <NavigationProperty Name="Person" Relationship="ClassProjectModel.FK_PicturePerson" FromRole="Pictures" ToRole="People" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ShedID" />
+          </Key>
+          <Property Name="ShedID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="String" Nullable="true" />
+          <Property Name="Day" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Time" Type="String" Nullable="true" />
+          <NavigationProperty Name="Activities" Relationship="ClassProjectModel.FK_ScheduleActivity" FromRole="Schedules" ToRole="Activities" />
+          <NavigationProperty Name="Labs" Relationship="ClassProjectModel.FK_ScheduleLab" FromRole="Schedules" ToRole="Labs" />
+          <NavigationProperty Name="StudyGroups" Relationship="ClassProjectModel.FK_StudyGroupSchedule" FromRole="Schedules" ToRole="StudyGroups" />
+        </EntityType>
+        <EntityType Name="StudyGroup">
+          <Key>
+            <PropertyRef Name="StuGrID" />
+          </Key>
+          <Property Name="StuGrID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ScheduleShedID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Schedule" Relationship="ClassProjectModel.FK_StudyGroupSchedule" FromRole="StudyGroups" ToRole="Schedules" />
+        </EntityType>
+        <Association Name="FK_ActivityGrades">
+          <End Role="Activities" Type="ClassProjectModel.Activity" Multiplicity="1" />
+          <End Role="Grades" Type="ClassProjectModel.Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="ActID" />
+            </Principal>
+            <Dependent Role="Grades">
+              <PropertyRef Name="ActivityActID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassFilesActivity">
+          <End Role="Activities" Type="ClassProjectModel.Activity" Multiplicity="0..1" />
+          <End Role="ClassFiles" Type="ClassProjectModel.ClassFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="ActID" />
+            </Principal>
+            <Dependent Role="ClassFiles">
+              <PropertyRef Name="Activity_ActID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScheduleActivity">
+          <End Role="Schedules" Type="ClassProjectModel.Schedule" Multiplicity="1" />
+          <End Role="Activities" Type="ClassProjectModel.Activity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedules">
+              <PropertyRef Name="ShedID" />
+            </Principal>
+            <Dependent Role="Activities">
+              <PropertyRef Name="ScheduleShedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GradesPerson">
+          <End Role="People" Type="ClassProjectModel.Person" Multiplicity="1" />
+          <End Role="Grades" Type="ClassProjectModel.Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Grades">
+              <PropertyRef Name="PersonPersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabPerson">
+          <End Role="Labs" Type="ClassProjectModel.Lab" Multiplicity="1" />
+          <End Role="People" Type="ClassProjectModel.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Labs">
+              <PropertyRef Name="LabID" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="LabLabID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScheduleLab">
+          <End Role="Schedules" Type="ClassProjectModel.Schedule" Multiplicity="1" />
+          <End Role="Labs" Type="ClassProjectModel.Lab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedules">
+              <PropertyRef Name="ShedID" />
+            </Principal>
+            <Dependent Role="Labs">
+              <PropertyRef Name="ScheduleShedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PicturePerson">
+          <End Role="People" Type="ClassProjectModel.Person" Multiplicity="0..1" />
+          <End Role="Pictures" Type="ClassProjectModel.Picture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Pictures">
+              <PropertyRef Name="Person_PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudyGroupSchedule">
+          <End Role="Schedules" Type="ClassProjectModel.Schedule" Multiplicity="1" />
+          <End Role="StudyGroups" Type="ClassProjectModel.StudyGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedules">
+              <PropertyRef Name="ShedID" />
+            </Principal>
+            <Dependent Role="StudyGroups">
+              <PropertyRef Name="ScheduleShedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ClassProjectModelStoreContainer" CdmEntityContainer="ClassProjectEntities">
+    <EntitySetMapping Name="Activities">
+      <EntityTypeMapping TypeName="IsTypeOf(ClassProjectModel.Activity)">
+        <MappingFragment StoreEntitySet="Activities">
+          <ScalarProperty Name="ActID" ColumnName="ActID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Property1" ColumnName="Property1" />
+          <ScalarProperty Name="ScheduleShedID" ColumnName="ScheduleShedID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClassFiles">
+      <EntityTypeMapping TypeName="IsTypeOf(ClassProjectModel.ClassFile)">
+        <MappingFragment StoreEntitySet="ClassFiles">
+          <ScalarProperty Name="FileID" ColumnName="FileID" />
+          <ScalarProperty Name="File" ColumnName="File" />
+          <ScalarProperty Name="Activity_ActID" ColumnName="Activity_ActID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Grades">
+      <EntityTypeMapping TypeName="IsTypeOf(ClassProjectModel.Grade)">
+        <MappingFragment StoreEntitySet="Grades">
+          <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="PersonPersonId" ColumnName="PersonPersonId" />
+          <ScalarProperty Name="ActivityActID" ColumnName="ActivityActID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Labs">
+      <EntityTypeMapping TypeName="IsTypeOf(ClassProjectModel.Lab)">
+        <MappingFragment StoreEntitySet="Labs">
+          <ScalarProperty Name="LabID" ColumnName="LabID" />
+          <ScalarProperty Name="StudName" ColumnName="StudName" />
+          <ScalarProperty Name="InstrName" ColumnName="InstrName" />
+          <ScalarProperty Name="ScheduleShedID" ColumnName="ScheduleShedID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="IsTypeOf(ClassProjectModel.Person)">
+        <MappingFragment StoreEntitySet="People">
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+          <ScalarProperty Name="Fname" ColumnName="Fname" />
+          <ScalarProperty Name="Lname" ColumnName="Lname" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+          <ScalarProperty Name="LabLabID" ColumnName="LabLabID" />
+          <ScalarProperty Name="PicturePictureID" ColumnName="PicturePictureID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pictures">
+      <EntityTypeMapping TypeName="IsTypeOf(ClassProjectModel.Picture)">
+        <MappingFragment StoreEntitySet="Pictures">
+          <ScalarProperty Name="PicureID" ColumnName="PicureID" />
+          <ScalarProperty Name="PictureFile" ColumnName="PictureFile" />
+          <ScalarProperty Name="Person_PersonId" ColumnName="Person_PersonId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Schedules">
+      <EntityTypeMapping TypeName="IsTypeOf(ClassProjectModel.Schedule)">
+        <MappingFragment StoreEntitySet="Schedules">
+          <ScalarProperty Name="ShedID" ColumnName="ShedID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudyGroups">
+      <EntityTypeMapping TypeName="IsTypeOf(ClassProjectModel.StudyGroup)">
+        <MappingFragment StoreEntitySet="StudyGroups">
+          <ScalarProperty Name="StuGrID" ColumnName="StuGrID" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="ScheduleShedID" ColumnName="ScheduleShedID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
